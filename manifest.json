@@ -17,5 +17,12 @@
   ],
   "icons": {
     "48": "icon.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+    "id": "ankit@ankitsweng.tech",
+    "strict_min_version": "60.0"
+  }
+     
   }
 }

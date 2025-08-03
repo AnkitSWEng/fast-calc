@@ -47,41 +47,84 @@ function createPopup(e, num) {
     box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
   `;
 
-  popup.innerHTML = `
-    <div id="popup-header" style="
-      background:#eee;
-      padding:9px;
-      cursor:move;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      font-weight:bold;
-      border-bottom:2px solid #ccc;
-    ">
-      <span>Fast Calc</span>
-      <span id="closePopup" style="cursor:pointer;font-size:18px;">&times;</span>
-    </div>
-    <div style="display: flex; padding: 9px;">
-      <div style="flex: 1;">
-        <div>X: <input type="text" id="firstNum" value="${num}" style="width: 90px;" /></div>
-        <div>Y: <input type="text" id="secondNum" placeholder="select or type" style="width: 90px;" /></div>
-        <div id="res" style="margin-top:9px;font-weight:bold;"></div>
-        <div style="margin-top:10px; display:flex; gap:6px;">
-          <button id="clearFields">Clear</button>
-          <button id="useLastResult">Use Last Result</button>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: column; margin-left: 10px; gap: 5px;">
-        <button class="op-btn" data-op="+" style="padding: 6px;">+</button>
-        <button class="op-btn" data-op="-" style="padding: 6px;">−</button>
-        <button class="op-btn" data-op="*" style="padding: 6px;">×</button>
-        <button class="op-btn" data-op="/" style="padding: 6px;">÷</button>
-        <button class="op-btn" data-op="%" style="padding: 6px;">%</button>
-      </div>
-    </div>
+  // Create the header element
+  const header = document.createElement("div");
+  header.id = "popup-header";
+  header.style = `
+    background:#eee;
+    padding:9px;
+    cursor:move;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:bold;
+    border-bottom:2px solid #ccc;
   `;
+  const headerTitle = document.createElement("span");
+  headerTitle.textContent = "Fast Calc";
+  const closeBtn = document.createElement("span");
+  closeBtn.id = "closePopup";
+  closeBtn.style = "cursor:pointer;font-size:18px;";
+  closeBtn.textContent = "×";
+  header.appendChild(headerTitle);
+  header.appendChild(closeBtn);
 
+  // Create the body of the popup
+  const body = document.createElement("div");
+  body.style = "display: flex; padding: 9px;";
+
+  const leftSide = document.createElement("div");
+  leftSide.style = "flex: 1;";
+
+  const firstInputDiv = document.createElement("div");
+  firstInputDiv.innerHTML = `X: <input type="text" id="firstNum" value="${num}" style="width: 90px;" />`;
+  const secondInputDiv = document.createElement("div");
+  secondInputDiv.innerHTML = `Y: <input type="text" id="secondNum" placeholder="select or type" style="width: 90px;" />`;
+  const resultDiv = document.createElement("div");
+  resultDiv.id = "res";
+  resultDiv.style = "margin-top:9px;font-weight:bold;";
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.style = "margin-top:10px; display:flex; gap:6px;";
+  const clearButton = document.createElement("button");
+  clearButton.id = "clearFields";
+  clearButton.textContent = "Clear";
+  const useResultButton = document.createElement("button");
+  useResultButton.id = "useLastResult";
+  useResultButton.textContent = "Use Last Result";
+
+  buttonContainer.appendChild(clearButton);
+  buttonContainer.appendChild(useResultButton);
+
+  leftSide.appendChild(firstInputDiv);
+  leftSide.appendChild(secondInputDiv);
+  leftSide.appendChild(resultDiv);
+  leftSide.appendChild(buttonContainer);
+
+  // Create the operator buttons
+  const rightSide = document.createElement("div");
+  rightSide.style = "display: flex; flex-direction: column; margin-left: 10px; gap: 5px;";
+
+  const operators = ["+", "-", "*", "/", "%"];
+  operators.forEach((op) => {
+    const opButton = document.createElement("button");
+    opButton.classList.add("op-btn");
+    opButton.dataset.op = op;
+    opButton.style = "padding: 6px;";
+    opButton.textContent = op;
+    rightSide.appendChild(opButton);
+  });
+
+  // Append all parts to the popup
+  body.appendChild(leftSide);
+  body.appendChild(rightSide);
+
+  popup.appendChild(header);
+  popup.appendChild(body);
+
+  // Add the popup to the body
   document.body.appendChild(popup);
+
   enableDragging();
   attachOpHandler();
   setupClearHandler();
