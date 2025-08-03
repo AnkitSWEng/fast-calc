@@ -1,0 +1,26 @@
+#fast-calc-popup {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 99999;
+  opacity: 0.9;
+  font-family: sans-serif;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+#popup-header {
+  background:#eee;
+  padding:9px;
+  cursor:move;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:bold;
+  border-bottom:2px solid #ccc;
+}
+
+.op-btn:hover {
+  background-color: #ddd;
+}
